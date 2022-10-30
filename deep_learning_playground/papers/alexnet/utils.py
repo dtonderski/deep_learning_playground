@@ -29,17 +29,3 @@ class LocalResponseNormalization(nn.Module):
             torch.div(tensor, divisor, out=tensor)
         else:
             return torch.div(tensor, divisor)
-
-
-class ReLU(nn.Module):
-    inplace: bool
-
-    def __init__(self, inplace):
-        super(ReLU, self).__init__()
-        self.inplace = inplace
-
-    def forward(self, tensor: torch.Tensor):
-        if self.inplace:
-            torch.maximum(tensor, torch.tensor(0), out=tensor)
-        else:
-            return torch.maximum(tensor, torch.tensor(0))
