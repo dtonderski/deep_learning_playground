@@ -7,12 +7,10 @@ class LocalResponseNormalization(nn.Module):
     alpha: float
     beta: float
     k: float
-    inplace: bool
 
-    def __init__(self, n=5, alpha=10 ** (-4), beta=0.75, k=2, inplace=False):
+    def __init__(self, n=5, alpha=10 ** (-4), beta=0.75, k=2):
         super(LocalResponseNormalization, self).__init__()
         self.n, self.alpha, self.beta, self.k = n, alpha, beta, k
-        self.inplace = inplace
 
     def forward(self, tensor: torch.Tensor):
         divisor = tensor * tensor
@@ -25,7 +23,5 @@ class LocalResponseNormalization(nn.Module):
                                            count_include_pad=False)
 
         divisor = (self.k + self.alpha * divisor) ** self.beta
-        if self.inplace:
-            torch.div(tensor, divisor, out=tensor)
-        else:
-            return torch.div(tensor, divisor)
+
+        return tensor / divisor
