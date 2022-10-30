@@ -1,6 +1,8 @@
 import torch
 from torch import nn
-from utils import LocalResponseNormalization, ReLU
+from deep_learning_playground.normalization import LocalResponseNormalization
+from deep_learning_playground.regularization import Dropout
+from deep_learning_playground.activation import ReLU
 
 
 class AlexNet(nn.Module):
@@ -35,12 +37,21 @@ class AlexNet(nn.Module):
             nn.MaxPool2d(kernel_size=3, stride=2)
         )
 
+        self.convBase = nn.Sequential(self.firstConv,
+                                      self.secondConv,
+                                      self.thirdConv,
+                                      self.fourthConv,
+                                      self.fifthConv)
+
+        self.firstFC = nn.Sequential
+        (
+            nn.Linear(256 * 6 * 6, 4096),
+            Dropout(p=),
+
+        )
+
     def forward(self, x):
-        x = self.firstConv(x)
-        x = self.secondConv(x)
-        x = self.thirdConv(x)
-        x = self.fourthConv(x)
-        x = self.fifthConv(x)
+        x = self.convBase(x)
         return x
 
 
