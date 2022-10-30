@@ -43,6 +43,9 @@ class Dropout(nn.Module):
         self.p = p
 
     def forward(self, x):
-        mask = torch.rand(x.shape)
-        mask = mask > self.p
-        return x.mul(mask)
+        if self.training:
+            mask = torch.rand(x.shape)
+            mask = mask > self.p
+            return x.mul(mask)
+        else:
+            return x*self.p

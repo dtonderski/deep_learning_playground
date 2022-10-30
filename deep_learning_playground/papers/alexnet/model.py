@@ -1,12 +1,11 @@
 import torch
 from torch import nn
-from deep_learning_playground.normalization import LocalResponseNormalization
-from deep_learning_playground.regularization import Dropout
-from deep_learning_playground.activation import ReLU
+from deep_learning_playground.papers.alexnet.utils import \
+    LocalResponseNormalization, ReLU, Dropout
 
 
 class AlexNet(nn.Module):
-    def __init__(self):
+    def __init__(self, n_outputs=1000):
         super(AlexNet, self).__init__()
 
         # Most network parameters are given in the paper, but padding has to
@@ -43,15 +42,29 @@ class AlexNet(nn.Module):
                                       self.fourthConv,
                                       self.fifthConv)
 
-        self.firstFC = nn.Sequential
-        (
+        self.firstFC = nn.Sequential(
+            Dropout(p=0.5),
             nn.Linear(256 * 6 * 6, 4096),
-            Dropout(p=),
-
+            ReLU()
         )
+
+        self.secondFC = nn.Sequential(
+            Dropout(p=0.5),
+            nn.Linear(4096, 4096),
+            ReLU()
+        )
+
+        self.thirdFC = nn.Sequential(
+            nn.Linear(4096, n_outputs),
+        )
+        self.classifier = nn.Sequential(self.firstFC,
+                                        self.secondFC,
+                                        self.thirdFC)
 
     def forward(self, x):
         x = self.convBase(x)
+        x = torch.flatten(x, 1)
+        x = self.classifier(x)
         return x
 
 
@@ -68,4 +81,3 @@ if __name__ == '__main__':
     #                      )
     test = AlexNet()
     tensor = torch.rand((1, 3, 224, 224))
-    print(test(tensor).shape)
