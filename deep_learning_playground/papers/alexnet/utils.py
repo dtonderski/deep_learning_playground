@@ -2,6 +2,14 @@ import torch
 from torch import nn
 
 
+class ReLU(nn.Module):
+    def __init__(self):
+        super(ReLU, self).__init__()
+
+    def forward(self, tensor: torch.Tensor):
+        return torch.maximum(tensor, torch.tensor(0))
+
+
 class LocalResponseNormalization(nn.Module):
     n: int
     alpha: float
@@ -25,3 +33,16 @@ class LocalResponseNormalization(nn.Module):
         divisor = (self.k + self.alpha * divisor) ** self.beta
 
         return tensor / divisor
+
+
+class Dropout(nn.Module):
+    p: float
+
+    def __init__(self, p):
+        super(Dropout, self).__init__()
+        self.p = p
+
+    def forward(self, x):
+        mask = torch.rand(x.shape)
+        mask = mask > self.p
+        return x.mul(mask)
