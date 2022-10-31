@@ -7,7 +7,8 @@ from deep_learning_playground.papers.alexnet.utils import \
 
 generator = torch.Generator()
 generator.manual_seed(21309124)
-shape = (10, 3, 224, 224)
+# Can't have 3 channels as we have 5 kernels in normalization
+shape = (10, 10, 224, 224)
 
 
 def test_relu():
