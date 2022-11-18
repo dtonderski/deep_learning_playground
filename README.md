@@ -27,7 +27,6 @@ Current project list:
     - [ ] CycleGAN: https://arxiv.org/abs/1703.10593
 
  4. Object detection
-    - [ ] Fast-RCNN: https://arxiv.org/abs/1504.08083
     - [ ] Faster-RCNN: https://arxiv.org/abs/1506.01497
     - [ ] SSD: https://arxiv.org/abs/1512.02325
     - [ ] YOLO: https://arxiv.org/abs/1506.02640
